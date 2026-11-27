@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다이노리 광장 — 채팅 · 공략 · 스크린샷</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+<style>
+  :root{--ink:#302618;--paper:#fff9e9;--cream:#f1e3c3;--moss:#334938;--moss-d:#26392b;--amber:#f5ca69;--amber-d:#945718}
+  body{font-family:system-ui,"Malgun Gothic",sans-serif}
+  :focus-visible{outline:3px solid #aa6021;outline-offset:3px}
+  [hidden]{display:none!important}
+  .wrap{width:min(1120px,calc(100% - 64px));max-width:none;padding-inline:0}
+  .pbox{border:2px solid #bba783;background:#fffcf3;box-shadow:3px 4px 0 #e4d3b1;margin:0}
+  .btn,.btn.ghost{border:2px solid var(--ink);box-shadow:2px 3px 0 var(--ink);margin:0;min-height:39px}
+  .btn.small{min-height:30px}
+  input[type=text],textarea,select{border:1px solid #bba783;box-shadow:none}
+  header.mast{background:#fffcf3;border-bottom:1px solid #dfcfae}
+  .mast .wrap{min-height:73px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;gap:9px;align-items:center;font:800 23px/1.15 Galmuri11,"Malgun Gothic",sans-serif;text-decoration:none}
+  .brand img{width:42px;height:42px}
+  .brand small{display:block;color:#796548;letter-spacing:.22em;font:800 9px/1.2 system-ui,sans-serif;margin-top:3px}
+  .back{font-size:14px;font-weight:750;text-decoration:none}
+  .back:hover{text-decoration:underline}
+  .banner{background:#334938;color:#fff6d9;border-bottom:3px solid #26392b}
+  .banner .wrap{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:185px;padding-block:27px}
+  .banner h1{font:800 clamp(29px,4.8vw,52px)/1.18 Galmuri11,"Malgun Gothic",sans-serif;margin:0;letter-spacing:-.055em}
+  .banner p{color:#f2e1b0;margin:8px 0 0}
+  .banner-art{width:145px;max-width:23%;object-fit:contain;filter:drop-shadow(3px 4px #1d2c20)}
+  .workbench{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:24px 0 15px}
+  .who{margin-left:0;padding:0;background:none;box-shadow:none}
+  .who input{width:118px;padding:5px 8px}
+  .online{background:#e3e8c7;color:#334938;font-weight:700;white-space:nowrap}
+  nav.tabs{margin:0;gap:6px}
+  nav.tabs button{min-height:42px;padding:7px 10px;border:1px solid #cbb791;box-shadow:none;margin:0}
+  nav.tabs button.on{background:#f5ca69;border-color:#89581f}
+  .chat{height:clamp(270px,52vh,560px)}
+  .chat .log{background:#fffcf3}
+  .chat form{border-top:1px solid #cbb791}
+  .chat form input{min-width:0}
+  .chat form button{flex:none}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
+  .modal .pbox{padding-top:47px}
+  .modal .post h2{overflow-wrap:anywhere}
+  footer{background:#27382a;color:#f4e8c8;padding:22px 15px}
+  @media(max-width:700px){
+    .wrap{width:calc(100% - 36px)}
+    .mast .wrap{min-height:64px}
+    .banner .wrap{min-height:142px}
+    .banner p{font-size:14px}
+    .workbench{gap:12px}
+    .who{width:auto}
+    .row .ex{max-width:100%}
+    .chat form{padding:8px}
+  }
+</style>
+
+<link rel="stylesheet" href="assets/dinori.css">
+</head>
+<body class="plaza-page">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="mast"><div class="shell mast-inner">
+  <a class="brand" href="index.html"><img src="assets/icon.png" alt="" width="42" height="42"><span>다이노리 <small>DINORI</small></span></a>
+  <nav class="desktop-nav" aria-label="주 메뉴"><a href="index.html#game">게임 소개</a><a href="guide.html">처음 시작하기</a><a href="dex.html">공룡 도감</a><a href="reports.html">소식</a><a href="community.html" aria-current="page">광장</a><a class="mast-download" href="index.html#download">다운로드 <span aria-hidden="true">↓</span></a></nav><details class="mobile-menu"><summary>메뉴</summary><nav aria-label="주 메뉴"><a href="index.html#game">게임 소개</a><a href="guide.html">처음 시작하기</a><a href="dex.html">공룡 도감</a><a href="reports.html">소식</a><a href="community.html" aria-current="page">광장</a><a href="odds.html">확률 정보</a><a class="mast-download" href="index.html#download">다운로드 <span aria-hidden="true">↓</span></a></nav></details>
+</div></header>
+<section class="banner" aria-labelledby="communityTitle"><div class="shell">
+  <div><h1 id="communityTitle">다이노리 광장</h1><p>다른 박사님들과 공룡 이야기를 나눠요.</p></div>
+  <img class="banner-art" width="80" height="56" src="assets/trike_w1.png" alt="">
+</div></section>
+
+<main class="shell plaza-main" id="main" tabindex="-1">
+  <div class="workbench">
+  <nav class="tabs" id="tabs" aria-label="광장 메뉴">
+    <button data-tab="chat" class="on" aria-pressed="true">💬 실시간 채팅</button>
+    <button data-tab="guide">📜 공략 <span class="n" id="n-guide"></span></button>
+    <button data-tab="shot">📸 스크린샷 <span class="n" id="n-shot"></span></button>
+    <button data-tab="free">🦕 자유 <span class="n" id="n-free"></span></button>
+  </nav>
+  <div class="who">
+    <label for="nick">닉네임</label><input type="text" id="nick" maxlength="12" placeholder="익명 박사">
+    <span class="online" id="online" aria-live="polite">연결 대기</span>
+  </div>
+  </div>
+  <p class="tip" id="localHelp" hidden>채팅과 게시판은 <a href="https://dinori-releases.detaileddescription.workers.dev/community.html">공식 다이노리 광장</a>에서 이용할 수 있어요.</p>
+
+  <section id="tab-chat">
+    <div class="pbox chat">
+      <div class="log" id="log"><div class="sys">연결하는 중…</div></div>
+      <form id="chatForm" autocomplete="off">
+        <input type="text" id="chatIn" aria-label="채팅 메시지" maxlength="300" placeholder="다른 박사님들께 인사해 보세요 (Enter)">
+        <button class="btn" type="submit">보내기</button>
+      </form>
+    </div>
+    <p class="tip">채팅은 최근 500개까지만 남아요. 욕설·도배·개인정보는 관리자가 지우거나 차단할 수 있어요.</p>
+  </section>
+
+  <section id="tab-board" hidden>
+    <div class="bar">
+      <button class="btn" id="writeBtn">✏️ 글쓰기</button>
+      <span class="sp"></span>
+      <select id="sort" aria-label="게시물 정렬" style="width:auto"><option value="new">최신순</option><option value="likes">추천순</option></select>
+    </div>
+    <div id="board"></div>
+    <div style="text-align:center;margin-top:14px"><button class="btn ghost" id="more" hidden>더 보기</button></div>
+  </section>
+</main>
+
+<div class="modal" id="postModal"><div class="pbox post" id="postBox"></div></div>
+
+<div class="modal" id="writeModal"><div class="pbox">
+  <button class="btn ghost small close" data-close>닫기</button>
+  <h2 style="margin-top:0">✏️ 글쓰기</h2>
+  <form id="writeForm">
+    <p><select id="wType"><option value="guide">📜 공략</option><option value="shot">📸 스크린샷</option><option value="free">🦕 자유</option></select></p>
+    <p><input type="text" id="wTitle" maxlength="60" placeholder="제목"></p>
+    <p><textarea id="wBody" maxlength="6000" placeholder="내용 (공략은 자세할수록 좋아요!)"></textarea></p>
+    <p><label class="btn ghost" style="display:inline-block">🖼️ 그림 고르기<input type="file" id="wImg" accept="image/png,image/jpeg,image/webp" class="visually-hidden"></label>
+       <span class="tip" id="imgInfo">스크린샷 탭은 그림이 꼭 있어야 해요. 크면 자동으로 줄여요.</span>
+       <img class="preview" id="imgPrev" alt=""></p>
+    <div class="err" id="wErr"></div>
+    <button class="btn" type="submit" id="wSend">올리기</button>
+  </form>
+</div></div>
+
+<footer class="site-footer"><div class="shell"><div class="plaza-signoff">다이노리 광장 · 서로 친절하게! · <a href="index.html">다운로드 페이지</a> · <a href="#" id="adminLink">관리</a></div><span>다이노리 베타 · 일부 픽셀 그림은 AI로 만들었어요</span><nav aria-label="하단 메뉴"><a href="guide.html">초보 가이드</a><a href="dex.html">공룡 도감</a><a href="community.html">광장</a><a href="reports.html">발굴 보고서</a><a href="https://github.com/aksj548-prog/dinori-releases">배포 저장소</a><a href="odds.html">확률 정보</a><a href="privacy.html">개인정보 처리방침</a></nav></div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const store = { get(k){ try{ return localStorage.getItem(k) }catch{ return null } }, set(k,v){ try{ localStorage.setItem(k,v) }catch{} } };
+const sess  = { get(k){ try{ return sessionStorage.getItem(k) }catch{ return null } }, set(k,v){ try{ sessionStorage.setItem(k,v) }catch{} } };
+const esc = s => { const d=document.createElement('div'); d.textContent=s??''; return d.innerHTML };
+const ago = t => { const s=(Date.now()-t)/1000; if(s<60) return '방금'; if(s<3600) return Math.floor(s/60)+'분 전'; if(s<86400) return Math.floor(s/3600)+'시간 전'; return new Date(t).toLocaleDateString('ko-KR') };
+const nickEl = $('#nick');
+const localPreview = location.protocol === 'file:';
+nickEl.value = store.get('dinori_nick') || '';
+nickEl.addEventListener('change', () => store.set('dinori_nick', nickEl.value.trim()));
+const nick = () => nickEl.value.trim() || '익명 박사';
+let ADMIN = sess.get('dinori_admin') || '';
+if (ADMIN) document.body.classList.add('admin');
+
+async function api(path, opt={}) {
+  const h = {'content-type':'application/json'}; if (ADMIN) h['x-admin'] = ADMIN;
+  const r = await fetch('/api'+path, {...opt, headers:{...h, ...(opt.headers||{})}});
+  let d = {}; try { d = await r.json() } catch {}
+  if (!r.ok) throw new Error(d.error || ('오류 '+r.status));
+  return d;
+}
+
+// ── 탭 ──
+let TAB = 'chat';
+const TABNAME = {guide:'공략', shot:'스크린샷', free:'자유'};
+$('#tabs').addEventListener('click', e => { const b=e.target.closest('button'); if(b) go(b.dataset.tab) });
+function go(t){
+  TAB = t; location.hash = t;
+  document.querySelectorAll('#tabs button').forEach(b => {
+    const active = b.dataset.tab === t;
+    b.classList.toggle('on', active);
+    b.setAttribute('aria-pressed', String(active));
+  });
+  $('#tab-chat').hidden = t!=='chat'; $('#tab-board').hidden = t==='chat';
+  if (t!=='chat') loadBoard(true);
+}
+
+// ── 채팅 ──
+const log = $('#log'); let ws, retry = 1000, pingT;
+function line(m){
+  const d = document.createElement('div'); d.className = 'msg'+(m.nick===nick()?' me':''); d.dataset.id = m.id;
+  d.innerHTML = `<span class="nk">${esc(m.nick)}</span>${esc(m.body)}<span class="tm">${new Date(m.created).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</span> <button class="btn ghost small x" data-hide="${m.id}">지우기</button> <button class="btn ghost small x" data-ban="chat:${m.id}">차단</button>`;
+  return d;
+}
+function sys(t){ const d=document.createElement('div'); d.className='sys'; d.textContent=t; log.appendChild(d); log.scrollTop=log.scrollHeight }
+function connect(){
+  ws = new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/api/chat/ws');
+  ws.onopen = () => { retry = 1000; clearInterval(pingT); pingT = setInterval(()=>{ try{ ws.send('{"t":"ping"}') }catch{} }, 25000) };
+  ws.onmessage = e => {
+    const d = JSON.parse(e.data);
+    if (d.t==='hist'){ log.innerHTML=''; d.msgs.forEach(m=>log.appendChild(line(m))); if(!d.msgs.length) sys('아직 조용해요. 첫 인사를 남겨 보세요!'); setOnline(d.online); log.scrollTop=log.scrollHeight }
+    else if (d.t==='msg'){ const near = log.scrollHeight-log.scrollTop-log.clientHeight < 80; log.appendChild(line(d.msg)); if(near) log.scrollTop=log.scrollHeight }
+    else if (d.t==='online') setOnline(d.n);
+    else if (d.t==='hide'){ const el=log.querySelector(`[data-id="${d.id}"]`); if(el) el.remove() }
+    else if (d.t==='err') sys(d.msg);
+    else if (d.t==='post') sys(`📢 ${d.post.nick} 님이 ${TABNAME[d.post.type]||''}에 «${d.post.title}» 을 올렸어요`);
+  };
+  ws.onclose = () => { clearInterval(pingT); sys('연결이 끊겼어요. 다시 연결하는 중…'); setTimeout(connect, retry); retry = Math.min(retry*2, 20000) };
+}
+function setOnline(n){ $('#online').textContent = `● ${n}명 접속 중` }
+$('#chatForm').addEventListener('submit', e => {
+  e.preventDefault(); const v = $('#chatIn').value.trim(); if(!v) return;
+  if (!ws || ws.readyState!==1) return sys('아직 연결 중이에요');
+  ws.send(JSON.stringify({t:'say', nick:nick(), body:v})); $('#chatIn').value='';
+});
+log.addEventListener('click', async e => {
+  const h = e.target.dataset.hide, b = e.target.dataset.ban;
+  try {
+    if (h){ await api('/admin',{method:'POST',body:JSON.stringify({action:'hide_chat',id:+h})}) }
+    if (b){ const [k,id]=b.split(':'); if(confirm('이 사람을 차단할까요?')) { await api('/admin',{method:'POST',body:JSON.stringify({action:'ban',kind:k,id:+id})}); alert('차단했어요') } }
+  } catch(err){ alert(err.message) }
+});
+
+// ── 게시판 ──
+let posts = [], lastId = 0;
+$('#sort').addEventListener('change', () => loadBoard(true));
+$('#more').addEventListener('click', () => loadBoard(false));
+async function loadBoard(reset){
+  const sort = $('#sort').value;
+  if (localPreview) {
+    $('#board').innerHTML = '<div class="pbox empty">공식 광장에서 게시물을 볼 수 있어요.</div>';
+    return;
+  }
+  if (reset){ posts=[]; lastId=0; $('#board').innerHTML='<div class="empty">불러오는 중…</div>' }
+  try {
+    const q = `/posts?type=${TAB}&sort=${sort}` + (!reset && lastId && sort==='new' ? `&before=${lastId}` : '');
+    const d = await api(q); posts = reset ? d.posts : posts.concat(d.posts);
+    if (d.posts.length) lastId = d.posts[d.posts.length-1].id;
+    $('#more').hidden = sort!=='new' || d.posts.length < 24;
+    render();
+  } catch(err){ $('#board').innerHTML = `<div class="empty">${esc(err.message)}</div>` }
+}
+function render(){
+  const el = $('#board');
+  if (!posts.length){ el.innerHTML = `<div class="pbox empty">아직 ${TABNAME[TAB]} 글이 없어요. 첫 글을 써 보세요!</div>`; return }
+  if (TAB==='shot'){
+    el.innerHTML = '<div class="grid">'+posts.map(p=>`<div class="pbox shot" data-id="${p.id}"><div class="im" style="background-image:url(/api/img/${p.id})"></div><div class="tx"><b>${esc(p.title)}</b><div class="meta">${esc(p.nick)} · ${ago(p.created)} · ❤ ${p.likes} · 💬 ${p.comments}</div></div></div>`).join('')+'</div>';
+  } else {
+    el.innerHTML = '<div class="pbox list">'+posts.map(p=>`<div class="row" data-id="${p.id}"><div style="min-width:0"><div class="ttl">${p.has_img?'🖼️ ':''}${esc(p.title)}</div><div class="ex">${esc(p.excerpt)}</div><div class="meta">${esc(p.nick)} · ${ago(p.created)}</div></div><div class="num">❤ ${p.likes}<br>💬 ${p.comments}</div></div>`).join('')+'</div>';
+  }
+}
+$('#board').addEventListener('click', e => { const r=e.target.closest('[data-id]'); if(r) openPost(+r.dataset.id) });
+
+async function openPost(id){
+  const box = $('#postBox'); box.innerHTML = '<p>불러오는 중…</p>'; $('#postModal').classList.add('on'); location.hash = TAB+'/'+id;
+  try {
+    const {post:p, comments} = await api('/posts/'+id);
+    box.innerHTML = `<button class="btn ghost small close" data-close>닫기</button>
+      <h2>${esc(p.title)}</h2><div class="meta">${TABNAME[p.type]} · ${esc(p.nick)} · ${new Date(p.created).toLocaleString('ko-KR')}</div>
+      ${p.has_img?`<img class="big" src="/api/img/${p.id}" alt="">`:''}
+      <div class="body">${esc(p.body)}</div>
+      <div><button class="btn" id="likeBtn">❤ 추천 <span id="likeN">${p.likes}</span></button>
+        <button class="btn ghost small" id="repBtn">신고</button>
+        <button class="btn ghost small adm" id="delBtn">지우기(관리)</button>
+        <button class="btn ghost small adm" id="banBtn">작성자 차단</button></div>
+      <h3>댓글 ${comments.length}</h3>
+      <div id="cms">${comments.map(c=>`<div class="cm"><span class="nk">${esc(c.nick)}</span>${esc(c.body)} <span class="meta">${ago(c.created)}</span> <button class="btn ghost small adm" data-hc="${c.id}">지우기</button></div>`).join('')}</div>
+      <form id="cmForm" style="display:flex;gap:8px;margin-top:10px"><input type="text" id="cmIn" maxlength="500" placeholder="댓글을 남겨 주세요"><button class="btn">등록</button></form>
+      <div class="err" id="cmErr"></div>`;
+    $('#likeBtn').onclick = async () => { try{ const d=await api(`/posts/${id}/like`,{method:'POST'}); $('#likeN').textContent=d.likes }catch(err){ alert(err.message) } };
+    $('#repBtn').onclick = async () => { if(confirm('이 글을 신고할까요? (5번 신고되면 자동으로 가려져요)')){ await api('/report',{method:'POST',body:JSON.stringify({kind:'post',id})}); alert('신고했어요. 고마워요!') } };
+    $('#delBtn').onclick = async () => { if(confirm('지울까요?')){ try{ await api('/posts/'+id,{method:'DELETE'}); closeModals(); loadBoard(true) }catch(err){ alert(err.message) } } };
+    $('#banBtn').onclick = async () => { if(confirm('작성자를 차단할까요?')){ try{ await api('/admin',{method:'POST',body:JSON.stringify({action:'ban',kind:'post',id})}); alert('차단했어요') }catch(err){ alert(err.message) } } };
+    $('#cms').onclick = async e => { const c=e.target.dataset.hc; if(c && confirm('댓글을 지울까요?')){ try{ await api('/admin',{method:'POST',body:JSON.stringify({action:'hide_comment',id:+c})}); e.target.closest('.cm').remove() }catch(err){ alert(err.message) } } };
+    $('#cmForm').onsubmit = async e => {
+      e.preventDefault(); const v=$('#cmIn').value.trim(); if(!v) return;
+      try { const d = await api(`/posts/${id}/comments`,{method:'POST',body:JSON.stringify({nick:nick(),body:v})});
+        $('#cms').insertAdjacentHTML('beforeend', `<div class="cm"><span class="nk">${esc(d.comment.nick)}</span>${esc(d.comment.body)} <span class="meta">방금</span></div>`); $('#cmIn').value=''; $('#cmErr').textContent='' }
+      catch(err){ $('#cmErr').textContent = err.message }
+    };
+  } catch(err){ box.innerHTML = `<button class="btn ghost small close" data-close>닫기</button><p>${esc(err.message)}</p>` }
+}
+function closeModals(){ document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on')); if (TAB!=='chat') location.hash = TAB }
+document.addEventListener('click', e => { if (e.target.dataset.close!==undefined || e.target.classList.contains('modal')) closeModals() });
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModals() });
+
+// ── 글쓰기 ──
+let IMG = null;
+$('#writeBtn').onclick = () => { $('#wType').value = TAB; $('#wErr').textContent=''; $('#writeModal').classList.add('on'); $('#wTitle').focus() };
+$('#wImg').addEventListener('change', async e => {
+  const f = e.target.files[0]; if(!f) return;
+  try { IMG = await shrink(f); $('#imgPrev').src = IMG; $('#imgPrev').style.display='block'; $('#imgInfo').textContent = `${Math.round(IMG.length*0.75/1024)}KB`; }
+  catch { $('#imgInfo').textContent = '그림을 읽지 못했어요' }
+});
+function shrink(file){
+  return new Promise((ok, bad) => {
+    const im = new Image(); im.onerror = bad;
+    im.onload = () => {
+      let w=im.naturalWidth, h=im.naturalHeight; const M=1600; if (w>M||h>M){ const k=M/Math.max(w,h); w=Math.round(w*k); h=Math.round(h*k) }
+      const c=document.createElement('canvas'); c.width=w; c.height=h; const x=c.getContext('2d'); x.imageSmoothingEnabled = !(im.naturalWidth<=w); x.drawImage(im,0,0,w,h);
+      let q=0.9, url=c.toDataURL('image/webp', q); if(!url.startsWith('data:image/webp')) url=c.toDataURL('image/jpeg', q);
+      while (url.length*0.75 > 1_700_000 && q > 0.4){ q-=0.1; url = url.startsWith('data:image/webp') ? c.toDataURL('image/webp',q) : c.toDataURL('image/jpeg',q) }
+      URL.revokeObjectURL(im.src); ok(url);
+    };
+    im.src = URL.createObjectURL(file);
+  });
+}
+$('#writeForm').addEventListener('submit', async e => {
+  e.preventDefault(); $('#wSend').disabled = true; $('#wErr').textContent='';
+  try {
+    const d = await api('/posts', {method:'POST', body:JSON.stringify({type:$('#wType').value, title:$('#wTitle').value, body:$('#wBody').value, nick:nick(), image:IMG})});
+    $('#wTitle').value=''; $('#wBody').value=''; IMG=null; $('#imgPrev').style.display='none'; $('#wImg').value='';
+    closeModals(); go($('#wType').value); setTimeout(()=>openPost(d.id), 300);
+  } catch(err){ $('#wErr').textContent = err.message } finally { $('#wSend').disabled = false }
+});
+
+// ── 관리 ──
+$('#adminLink').onclick = async e => {
+  e.preventDefault();
+  if (ADMIN){ if(confirm('관리 모드를 끌까요?')){ ADMIN=''; sess.set('dinori_admin',''); document.body.classList.remove('admin') } return }
+  const pw = prompt('관리자 비밀번호'); if(!pw) return;
+  ADMIN = pw;
+  try { await api('/admin',{method:'POST',body:JSON.stringify({action:'check'})}); sess.set('dinori_admin', pw); document.body.classList.add('admin'); alert('관리 모드 켜짐') }
+  catch(err){ ADMIN=''; alert(err.message) }
+};
+
+// ── 시작 ──
+async function counts(){ try{ const s=await api('/stats'); ['guide','shot','free'].forEach(k=>$('#n-'+k).textContent = s[k==='guide'?'guides':k==='shot'?'shots':'free'] ); setOnline(s.online) }catch{} }
+if (localPreview) {
+  $('#localHelp').hidden = false;
+  $('#online').textContent = '로컬 미리보기';
+  $('#log').replaceChildren();
+  sys('공식 광장에 접속해 채팅에 참여해 보세요.');
+  $('#chatForm button').disabled = true;
+  $('#chatIn').disabled = true;
+  $('#writeBtn').disabled = true;
+  $('#adminLink').hidden = true;
+} else {
+  counts();
+  setInterval(counts, 60000);
+  connect();
+}
+const [h0, h1] = location.hash.slice(1).split('/');
+if (['guide','shot','free','chat'].includes(h0)) {
+  go(h0);
+  if (h1 && !localPreview) openPost(+h1);
+}
+</script>
+</body>
+</html>

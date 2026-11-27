@@ -1,0 +1,24 @@
+{
+  // 다이노리 베타 홈페이지 + 커뮤니티 (Cloudflare Workers)
+  // · site 폴더 = 홈페이지 정적 파일 · src/worker.js = 커뮤니티 API (채팅·공략·스크린샷, Durable Object 에 저장)
+  // · 설치 파일(64MB)은 GitHub 에서 받음
+  "name": "dinori-releases",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "COMMUNITY", "class_name": "Community" }, { "name": "ACCOUNTS", "class_name": "Accounts" }]
+  },
+  // v2: 계정 연동 · 클라우드 저장 (구글·네이버는 비밀값 GOOGLE_ID · GOOGLE_SECRET · NAVER_ID · NAVER_SECRET 를 Cloudflare 에서 넣어야 켜짐)
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Community"] }, { "tag": "v2", "new_sqlite_classes": ["Accounts"] }],
+  "vars": {
+    // 관리자 비밀번호의 SHA-256 (비밀번호 자체는 저장소에 없음)
+    "ADMIN_HASH": "0de98070fcc00d9dd2df5d4f4ab122f93cc728499327b968c1dad3f1523730e1"
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다이노리 발굴 보고서</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/dinori.css">
+</head>
+<body class="reports-page">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="mast"><div class="shell mast-inner">
+  <a class="brand" href="index.html"><img src="assets/icon.png" alt="" width="42" height="42"><span>다이노리 <small>DINORI</small></span></a>
+  <nav class="desktop-nav" aria-label="주 메뉴"><a href="index.html#game">게임 소개</a><a href="guide.html">처음 시작하기</a><a href="dex.html">공룡 도감</a><a href="reports.html" aria-current="page">소식</a><a href="community.html">광장</a><a class="mast-download" href="index.html#download">다운로드 <span aria-hidden="true">↓</span></a></nav><details class="mobile-menu"><summary>메뉴</summary><nav aria-label="주 메뉴"><a href="index.html#game">게임 소개</a><a href="guide.html">처음 시작하기</a><a href="dex.html">공룡 도감</a><a href="reports.html" aria-current="page">소식</a><a href="community.html">광장</a><a href="odds.html">확률 정보</a><a class="mast-download" href="index.html#download">다운로드 <span aria-hidden="true">↓</span></a></nav></details>
+</div></header>
+<main class="shell doc report-doc" id="main" tabindex="-1">
+<div class="field-heading"><div><h1>발굴 보고서</h1><p class="lead">캠프 본부가 버전마다 보내는 현장 보고예요. 새로 발견한 것 · 복원한 것 · 현장 메모로 나눠 적어요.</p></div><img src="assets/brachio_w1.png" class="field-sprite" alt="" width="96" height="84"></div>
+<div class="radio">치직… 게임을 켜 두면 새 보고서가 나올 때 캠프 무전으로 알려 드려요. <a href="index.html" class="radio-link">← 다운로드 페이지로</a></div>
+<div id="list"><p>보고서를 불러오는 중…</p></div>
+</main>
+<footer class="site-footer"><div class="shell"><span>다이노리 베타 · 일부 픽셀 그림은 AI로 만들었어요</span><nav aria-label="하단 메뉴"><a href="guide.html">초보 가이드</a><a href="dex.html">공룡 도감</a><a href="community.html">광장</a><a href="reports.html">발굴 보고서</a><a href="https://github.com/aksj548-prog/dinori-releases">배포 저장소</a><a href="odds.html">확률 정보</a><a href="privacy.html">개인정보 처리방침</a></nav></div></footer>
+<script>
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+  fetch('reports.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : []).then(list => {
+    const box = document.getElementById('list');
+    box.textContent = '';
+    for (const rep of list) {
+      const card = el('article', 'report');
+      card.id = 'v' + rep.version;
+      card.append(el('span', 'no', '발굴 보고서 No.' + rep.no));
+      const h = el('h2', '', rep.title);
+      h.append(el('span', 'v', 'v' + rep.version));
+      card.append(h);
+      let ul = null;
+      for (const line of rep.text.split('\n').slice(1)) {
+        if (line.startsWith('[')) { card.append(el('h3', '', line.replace(/^\[|\]$/g, ''))); ul = el('ul'); card.append(ul); }
+        else if (ul) ul.append(el('li', '', line.replace(/^· /, '')));
+      }
+      box.append(card);
+    }
+    if (!list.length) box.append(el('p', '', '아직 보고서가 없어요.'));
+  }).catch(() => { document.getElementById('list').textContent = '보고서를 불러오지 못했어요.'; });
+</script>
+</body>
+</html>
